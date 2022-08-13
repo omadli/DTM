@@ -5,6 +5,7 @@ Mundarija:
     - [Konfiguratsiya uchun](#konfiguratsiya-uchun)
     - [Ma'lumotlar bazasini noldan qurish uchun](#malumotlar-bazasini-noldan-qurish-uchun)
 - [Database](#database)
+  - [Structure](#structure)
 - [Parser](#parser)
   - [Features](#features)
   - [Foydalanish](#foydalanish)
@@ -48,7 +49,11 @@ Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar
 
 # Database
 
-Database ustida ishlanmoqda...
+Database ustida ishlanmoqda haliyam...
+
+## Structure
+SQL struktura [link](https://drawsql.app/teams/omadli/diagrams/dtm)
+<iframe width="100%" height="500px" style="box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); border-radius:15px;" allowtransparency="true" allowfullscreen="true" scrolling="no" title="DTM" frameborder="0" src="https://drawsql.app/teams/omadli/diagrams/dtm/embed"></iframe>
 
 
 <br/><br/>
@@ -87,6 +92,9 @@ User_detail() metodi kiritilgan abituriyent ID si bo'yicha uning `Home2022/Detai
 Natija JSON (python dict) qaytaradi:
 <img src="./screenshots/parser_User_detail_example.jpg">
 
+
+Bundan tashqari `Users_list()` metodi mandat saytidagi ro'yxatdan abturiyentlarni ID raqamlarini va balini oladi.
+<img src="./screenshots/parser_Users_list.jpg" alt="Users_list"> Xuddi manashu yeridan oladi.
 
 <br>
 <br>
