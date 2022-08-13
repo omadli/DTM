@@ -1,0 +1,70 @@
+{
+    "abt_id": 4000733,
+    "fish": "BOBOJONOVA Z. M.",
+    "til": "O'zbekcha",
+    "til_id": 1,
+    "grant_ustuvor": true,
+    "ball": 189,
+    "yonalishlar": [
+        {
+            "maqsadli": true,
+            "otm": "Самарқанд давлат тиббиёт университети",
+            "faculty": "Davolash ishi-Samarqand shahri",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910200054",
+            "grant": 8,
+            "kantrak": 0
+        },
+        {
+            "maqsadli": false,
+            "otm": "Самарқанд давлат тиббиёт университети",
+            "faculty": "Davolash ishi",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910200",
+            "grant": 29,
+            "kantrak": 204
+        },
+        {
+            "maqsadli": false,
+            "otm": "Самарқанд давлат тиббиёт университети",
+            "faculty": "Stomatologiya (yo‘nalishlar bo‘yicha)",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910100",
+            "grant": 38,
+            "kantrak": 68
+        },
+        {
+            "maqsadli": false,
+            "otm": "Toshkent  pediatriya tibbiyot instituti",
+            "faculty": "Davolash ishi",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910200",
+            "grant": 21,
+            "kantrak": 72
+        },
+        {
+            "maqsadli": false,
+            "otm": "Toshkent tibbiyot akademiyasi",
+            "faculty": "Davolash ishi",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910200",
+            "grant": 115,
+            "kantrak": 330
+        },
+        {
+            "maqsadli": false,
+            "otm": "Toshkent  pediatriya tibbiyot instituti",
+            "faculty": "Pediatriya ishi",
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "shifr": "60910300",
+            "grant": 42,
+            "kantrak": 172
+        }
+    ],
+}

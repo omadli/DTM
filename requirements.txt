@@ -1,0 +1,7 @@
+pprint
+environs
+aiohttp==3.8.1
+asyncpg==0.25.0
+requests==2.27.1
+selenium==4.3.0
+webdriver-manager==3.8.3
