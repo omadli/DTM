@@ -1,16 +1,16 @@
-# DTM
-
-## Mundarija:
-- [DTM](#dtm)
-  - [Mundarija:](#mundarija)
-  - [O'rnatish](#ornatish)
+Mundarija:
+- [O'rnatish](#ornatish)
     - [Kerakli dastur va kutubxonalar](#kerakli-dastur-va-kutubxonalar)
     - [Python kutubxonalari](#python-kutubxonalari)
     - [Konfiguratsiya uchun](#konfiguratsiya-uchun)
     - [Ma'lumotlar bazasini noldan qurish uchun](#malumotlar-bazasini-noldan-qurish-uchun)
-  - [Xulosa](#xulosa)
+- [Database](#database)
+- [Parser](#parser)
+  - [Features](#features)
+  - [Foydalanish](#foydalanish)
+- [Xulosa](#xulosa)
 
-## O'rnatish
+# O'rnatish
 ### Kerakli dastur va kutubxonalar
 * Python 3.8+
 * PostgreSQL baza
@@ -46,11 +46,52 @@ python first_time_runner.py
 Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar bilan to'ldiradi.
 
 
+# Database
+
+Database ustida ishlanmoqda...
+
+
+<br/><br/>
+
+# Parser
+
+## Features
+
+Parser asinxron ishlaydi!
+Oddiygina `aiohttp` va `beautifulsoup4` kutubxonalaridan foydalanib. 
+
+
+## Foydalanish
+
+Foydalanish ham asinxron bo'lishi kerak. Namuna:
+```python
+import asyncio
+from parser import DTM
+
+abtID = 4000733
+
+async def __main():
+    p = DTM()
+    await p.start()
+    datas = dict(await p.User_detail(abtID))
+    print(datas)
+    await p.close()
+    
+
+if __name__ == '__main__':
+    asyncio.run(__main())
+```
+
+User_detail() metodi kiritilgan abituriyent ID si bo'yicha uning `Home2022/Details/` + `abtID` sahifasidagi barcha ma'lumotlarini oladi.
+<img src="./screenshots/parser_User_detail.jpg" alt="User detail page">
+Natija JSON (python dict) qaytaradi:
+<img src="./screenshots/parser_User_detail_example.jpg">
+
 
 <br>
 <br>
 
-## Xulosa
+# Xulosa
 
 Hozircha shular.
 <br>
