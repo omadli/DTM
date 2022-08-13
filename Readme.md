@@ -5,6 +5,7 @@ Mundarija:
     - [Konfiguratsiya uchun](#konfiguratsiya-uchun)
     - [Ma'lumotlar bazasini noldan qurish uchun](#malumotlar-bazasini-noldan-qurish-uchun)
 - [Database](#database)
+  - [Bazani clonlash](#bazani-clonlash)
   - [Structure](#structure)
 - [Parser](#parser)
   - [Features](#features)
@@ -49,7 +50,14 @@ Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar
 
 # Database
 
-Database ustida ishlanmoqda haliyam...
+## Bazani clonlash
+`dtm.sql` fayli ichida ma'lumotlar bazasidagi parsing qilib olingan ma'lumotlar bor.
+`pg_dump` dan foydalanib chiqarilgan __backup__ fayl.
+O'zizga clonlab olish uchun terminalga
+```bash
+psql -d <DB_NAME. -f db.sql -U <DB_USER>
+```
+deb yozing. `<DB_NAME>` o'rniga bazangiz uchun nom, masalan __DTM__ va `<DB_USER>` o'rniga o'zingizni psql foydalanuvchi username yingiz. Masalan `postgres` bo'lishi mumkin.
 
 ## Structure
 SQL struktura 👉 [link](https://drawsql.app/teams/omadli/diagrams/dtm).
