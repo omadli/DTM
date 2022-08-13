@@ -52,8 +52,8 @@ Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar
 Database ustida ishlanmoqda haliyam...
 
 ## Structure
-SQL struktura [link](https://drawsql.app/teams/omadli/diagrams/dtm)
-<iframe width="100%" height="500px" style="box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); border-radius:15px;" allowtransparency="true" allowfullscreen="true" scrolling="no" title="DTM" frameborder="0" src="https://drawsql.app/teams/omadli/diagrams/dtm/embed"></iframe>
+SQL struktura 👉 [link](https://drawsql.app/teams/omadli/diagrams/dtm).
+<img src="./screenshots/db_structure.png" alt="Database structure">
 
 
 <br/><br/>
