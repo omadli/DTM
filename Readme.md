@@ -55,7 +55,7 @@ Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar
 `pg_dump` dan foydalanib chiqarilgan __backup__ fayl.
 O'zizga clonlab olish uchun terminalga
 ```bash
-psql -d <DB_NAME> -f db.sql -U <DB_USER>
+psql -d <DB_NAME> -f dtm.sql -U <DB_USER>
 ```
 deb yozing. `<DB_NAME>` o'rniga bazangiz uchun nom, masalan __DTM__ va `<DB_USER>` o'rniga o'zingizni psql foydalanuvchi username yingiz. Masalan `postgres` bo'lishi mumkin.
 
