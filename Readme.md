@@ -83,7 +83,7 @@ if __name__ == '__main__':
 ```
 
 User_detail() metodi kiritilgan abituriyent ID si bo'yicha uning `Home2022/Details/` + `abtID` sahifasidagi barcha ma'lumotlarini oladi.
-<img src="./screenshots/parser_User_detail.jpg" alt="User detail page">
+<img src="./screenshots/parser_User_detail2.jpg" alt="User detail page">
 Natija JSON (python dict) qaytaradi:
 <img src="./screenshots/parser_User_detail_example.jpg">
 
