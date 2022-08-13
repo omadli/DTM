@@ -102,6 +102,13 @@ class DTM:
     async def Users_list(self, page: int, region: int, university: int, faculty: int, lang: int=1, mode: int=1) -> list|None:
         # https://mandat.dtm.uz/Home2022/AfterFilter?page=1275&region=11&university=363&faculty=60910200&
         # edLang=1&edType=1&nog=False&muy=False&soldier=False&iiv=False&prez=0&notC=0&bans=0&covid=0&olis=False&sortorder=ResultDesc
+        '''
+        Mandat saytidagi abituriyentlar ro'yxatini oladi
+        :param int page: sahifa raqami
+        :param int region: Hudud id raqami
+        ...
+        :return: list[dict] yoki None qaytaradi
+        '''
         bs: BeautifulSoup = self.__getPage(
             url='Home2022/AfterFilter',
             data={
@@ -131,7 +138,22 @@ class DTM:
         rows = table.find_all('tr')[1:]
         result = []
         for row in rows:
-            result.append(row.find('td').text.strip())
+            tds = row.find_all('td')
+            res1 = dict()
+            res1['abtID'] = tds[0].text.strip()
+            res1['abtName'] = tds[1].text.strip()
+            res1['yonalish'] = tds[2].text.strip()
+            res1['otm'] = tds[3].text.strip()
+            ball = tds[4].text.strip()
+            if ball == "Qiymatlanmagan!":
+                res1['ball'] = None
+            else:
+                ball = ball.replace(',', '.')
+                res1['ball'] = float(ball)
+            res1['til'] = tds[5].text.strip()
+            res1['tilID'] = self.languages.index(res1['til']) + 1
+            res1['mode'] = tds[6].text.strip()
+            result.append(res1)
         return result
 
 
