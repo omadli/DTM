@@ -4,7 +4,7 @@ from pprint import pprint
 
 
 
-html = open('./parser/test/test2.html', encoding='utf8').read()
+html = open('./parser/test/test3.html', encoding='utf8').read()
 bs = BeautifulSoup(html, 'html.parser')
 
 modes = ['Kunduzgi', 'Sirtqi', 'Kechki', 'Masofaviy']
@@ -45,16 +45,18 @@ if 'TEST SINOVLARIDA ISHTIROK ETMAGAN!' not in divCom.text:
     collaps = divCom.find('div', attrs={'id': 'collaps'})
     result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
     table = collaps.find('table', attrs={'class': 'table table-bordered'})
-    tds = table.find_all('td')
+    tds = table.find_all('td')[:5]
     bloks = {}
     for i, td in enumerate(tds):
+        blokcha = {}
         txt = td.text.strip().replace('\n', '').replace('\t', '')
         # 1 - blok (1.1 ball)Ona tili10 ta savol
-        match = re.search(str(i+1) + r" - blok \(([0-9]\.[0-9]) ball\)([A-Za-z ]+)([0-9]+) ta savol", txt)
-        bloks[f'blok{i+1}']['bali'] = float(match.group(0))
-        bloks[f'blok{i+1}']['fan'] = match.group(1)
-        bloks[f'blok{i+1}']['savollarSoni'] = int(match.group(2))
-        
+        match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
+        print(match.groups())
+        blokcha['bali'] = float(match.groups()[0])
+        blokcha['fan'] = match.groups()[1]
+        blokcha['savollarSoni'] = int(match.groups()[2])
+        bloks.update({f'blok{i+1}': blokcha})
     result['natija'] = bloks
                   
 pprint(result)
