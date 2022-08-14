@@ -82,21 +82,22 @@ class DTM:
             collaps = divCom.find('div', attrs={'id': 'collaps'})
             result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
             table = collaps.find('table', attrs={'class': 'table table-bordered'})
-            tds = table.find_all('td')[:5]
-            bloks = {}
+            tds = table.thead.tr.find_all('td')[:5]
+            bloks = []
             for i, td in enumerate(tds):
                 blokcha = {}
                 txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
                 # 1 - blok (1.1 ball)Ona tili10 ta savol
-                print(td.text.strip().replace('\r', '').replace('\n', '').replace('\t', ''))
                 match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
                 blokcha['bali'] = float(match.groups()[0])
                 blokcha['fan'] = match.groups()[1]
                 blokcha['savollarSoni'] = int(match.groups()[2])
-                bloks.update({f'blok{i+1}': blokcha})
-                
-                
-            result['natija'] = bloks
+                bloks.append(blokcha)
+            
+            corrects = table.tbody.tr.find_all('td')[::2]
+            for i in range(5):
+                bloks[i]['yechganlariSoni'] = int(corrects[i].text.strip())
+            result['bloks'] = bloks
             
         return result
         
@@ -121,16 +122,16 @@ class DTM:
                 'faculty': faculty,
                 'edLang': lang,
                 'edType': mode,
-                # 'nog': "False",
-                # 'muy': "False",
-                # 'soldier': "False",
-                # 'iiv': "False",
-                # 'prez': 0,
-                # 'notC': 0,
-                # 'bans': 0,
-                # 'covid': 0,
-                # 'olis': "False",
-                # 'sortorder': 'ResultDesc'
+                'nog': "False",
+                'muy': "False",
+                'soldier': "False",
+                'iiv': "False",
+                'prez': 0,
+                'notC': 0,
+                'bans': 0,
+                'covid': 0,
+                'olis': "False",
+                'sortorder': 'ResultDesc'
             }
         )
         if bs is None:
@@ -144,7 +145,7 @@ class DTM:
         for row in rows:
             tds = row.find_all('td')
             res1 = dict()
-            res1['abtID'] = tds[0].text.strip()
+            res1['abtID'] = int(tds[0].text.strip())
             res1['abtName'] = tds[1].text.strip()
             res1['yonalish'] = tds[2].text.strip()
             res1['otm'] = tds[3].text.strip()
@@ -172,10 +173,11 @@ async def __main():
     datas = dict(await p.User_detail(4000733))
     # pprint(datas)
     # print(str(datas))
-    with open('test.json', 'w', encoding='utf8') as f:
-        f.write(json.dumps(datas))
+    with open('./parser/test/result_example.json', 'w', encoding='utf8') as f:
+        f.write(json.dumps(datas, indent=4, sort_keys=True))
     await p.close()
     
 
 if __name__ == '__main__':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(__main())
