@@ -7,6 +7,7 @@ Mundarija:
 - [Database](#database)
   - [Bazani clonlash](#bazani-clonlash)
   - [Structure](#structure)
+  - [Bazada nimalar bor](#bazada-nimalar-bor)
 - [Parser](#parser)
   - [Features](#features)
   - [Foydalanish](#foydalanish)
@@ -63,6 +64,12 @@ deb yozing. `<DB_NAME>` o'rniga bazangiz uchun nom, masalan __DTM__ va `<DB_USER
 SQL struktura 👉 [link](https://drawsql.app/teams/omadli/diagrams/dtm).
 <img src="./screenshots/db_structure.png" alt="Database structure">
 
+## Bazada nimalar bor
+Baza hozircha bo'sh. Tets uchun 1000 ta abituriyent ma'lumotlari bor. Mediklardan. Abiturients jadvalida ko'rishiz mumkin.
+```SQL
+SELECT * FROM Abiturients;
+```
+<img src="./screenshots/db_abiturients.png" alt="Bazadagi abituriyentlar">
 
 <br/><br/>
 
