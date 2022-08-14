@@ -82,15 +82,18 @@ class DTM:
             collaps = divCom.find('div', attrs={'id': 'collaps'})
             result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
             table = collaps.find('table', attrs={'class': 'table table-bordered'})
-            tds = table.find_all('td')
+            tds = table.find_all('td')[:5]
             bloks = {}
             for i, td in enumerate(tds):
-                txt = td.text.strip().replace('\n', '').replace('\t', '')
+                blokcha = {}
+                txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
                 # 1 - blok (1.1 ball)Ona tili10 ta savol
-                match = re.search(str(i+1) + r" - blok \(([0-9]\.[0-9]) ball\)([A-Za-z ]+)([0-9]+) ta savol", txt)
-                bloks[f'blok{i+1}']['bali'] = float(match.group(0))
-                bloks[f'blok{i+1}']['fan'] = match.group(1)
-                bloks[f'blok{i+1}']['savollarSoni'] = int(match.group(2))
+                print(td.text.strip().replace('\r', '').replace('\n', '').replace('\t', ''))
+                match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
+                blokcha['bali'] = float(match.groups()[0])
+                blokcha['fan'] = match.groups()[1]
+                blokcha['savollarSoni'] = int(match.groups()[2])
+                bloks.update({f'blok{i+1}': blokcha})
                 
                 
             result['natija'] = bloks
@@ -109,7 +112,7 @@ class DTM:
         ...
         :return: list[dict] yoki None qaytaradi
         '''
-        bs: BeautifulSoup = self.__getPage(
+        bs: BeautifulSoup = await self.__getPage(
             url='Home2022/AfterFilter',
             data={
                 'page': page,
@@ -118,22 +121,23 @@ class DTM:
                 'faculty': faculty,
                 'edLang': lang,
                 'edType': mode,
-                'nog': False,
-                'muy': False,
-                'soldier': False,
-                'iiv': False,
-                'prez': 0,
-                'notC': 0,
-                'bans': 0,
-                'covid': 0,
-                'olis': False,
-                'sortorder': 'ResultDesc'
+                # 'nog': "False",
+                # 'muy': "False",
+                # 'soldier': "False",
+                # 'iiv': "False",
+                # 'prez': 0,
+                # 'notC': 0,
+                # 'bans': 0,
+                # 'covid': 0,
+                # 'olis': "False",
+                # 'sortorder': 'ResultDesc'
             }
         )
-        if bs in None:
+        if bs is None:
             return None
-        table = bs.find('table', attrs={'id': 'myTable'}).tbody
-        if "Ma'lumot topilmadi" in table.text:
+        asosiy = bs.find('div', attrs={'id': 'Asosiy'})
+        table = asosiy.find('table', attrs={'id': 'myTable'})
+        if "Ma'lumot topilmadi" in asosiy.text:
             return []
         rows = table.find_all('tr')[1:]
         result = []
@@ -154,7 +158,10 @@ class DTM:
             res1['tilID'] = self.languages.index(res1['til']) + 1
             res1['mode'] = tds[6].text.strip()
             result.append(res1)
-        return result
+            
+        n = asosiy.find_all('div', attrs={'class': 'alert'})[-1].find_all('b')[2]
+        n = int(n.text.strip())
+        return {'result': result, 'jami': n}
 
 
 
