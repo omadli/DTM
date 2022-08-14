@@ -50,56 +50,60 @@ class DTM:
         bs = await self.__getPage('Home2022/Details/' + str(abt_id))
         if bs is None:
             return None
-        result = {'abt_id': abt_id}
-        main_element = bs.find('main')
-        divs = main_element.find_all('div', attrs={'class':'card-header'})
-        result['fish'] = divs[1].strong.text.strip()
-        divCom = main_element.find('div', attrs={'id': 'divCom'}).div
-        result['til'] = divCom.find_all('div', attrs={'class': 'col-md-4'})[1].u.text.strip()
-        result['til_id'] = self.languages.index(result['til']) + 1
-        result['grant_ustuvor'] = "avval davlat granti, so'ngra to'lov-kontrakt asosida ko'rib chiqiladi!" in divCom.text
-        tbody = divCom.find('tbody')
-        tr_list = tbody.find_all('tr')
-        result['yonalishlar'] = []
-        for tr in tr_list:
-            td = tr.find_all('td')
-            res = {}
-            res['maqsadli'] = 'Maqsadli' in td[0].text.strip()
-            res['otm'] = td[1].text.strip()
-            res['faculty'] = td[2].text.strip()
-            res['mode'] = td[3].text.strip()
-            res['mode_id'] = self.modes.index(res['mode']) + 1
-            res['shifr'] = td[4].text.strip()
-            grant = td[5].text.strip()
-            res['grant'] = 0 if grant == '-' else int(grant)
-            kantrak = td[6].text.strip()
-            res['kantrak'] = 0 if kantrak == '-' else int(kantrak)
-            result['yonalishlar'].append(res)
-        
-        result['ball'] = None
-        result['natija'] = None
-        if 'TEST SINOVLARIDA ISHTIROK ETMAGAN!' not in divCom.text:
-            collaps = divCom.find('div', attrs={'id': 'collaps'})
-            result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
-            table = collaps.find('table', attrs={'class': 'table table-bordered'})
-            tds = table.thead.tr.find_all('td')[:5]
-            bloks = []
-            for i, td in enumerate(tds):
-                blokcha = {}
-                txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
-                # 1 - blok (1.1 ball)Ona tili10 ta savol
-                match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
-                blokcha['bali'] = float(match.groups()[0])
-                blokcha['fan'] = match.groups()[1]
-                blokcha['savollarSoni'] = int(match.groups()[2])
-                bloks.append(blokcha)
+        try:
+            result = {'abt_id': abt_id}
+            main_element = bs.find('main')
+            divs = main_element.find_all('div', attrs={'class':'card-header'})
+            result['fish'] = divs[1].strong.text.strip()
+            divCom = main_element.find('div', attrs={'id': 'divCom'}).div
+            result['til'] = divCom.find_all('div', attrs={'class': 'col-md-4'})[1].u.text.strip()
+            result['til_id'] = self.languages.index(result['til']) + 1
+            result['grant_ustuvor'] = "avval davlat granti, so'ngra to'lov-kontrakt asosida ko'rib chiqiladi!" in divCom.text
+            tbody = divCom.find('tbody')
+            tr_list = tbody.find_all('tr')
+            result['yonalishlar'] = []
+            for tr in tr_list:
+                td = tr.find_all('td')
+                res = {}
+                res['maqsadli'] = 'Maqsadli' in td[0].text.strip()
+                res['otm'] = td[1].text.strip()
+                res['faculty'] = td[2].text.strip()
+                res['mode'] = td[3].text.strip()
+                res['mode_id'] = self.modes.index(res['mode']) + 1
+                res['shifr'] = td[4].text.strip()
+                grant = td[5].text.strip()
+                res['grant'] = 0 if grant == '-' else int(grant)
+                kantrak = td[6].text.strip()
+                res['kantrak'] = 0 if kantrak == '-' else int(kantrak)
+                result['yonalishlar'].append(res)
             
-            corrects = table.tbody.tr.find_all('td')[::2]
-            for i in range(5):
-                bloks[i]['yechganlariSoni'] = int(corrects[i].text.strip())
-            result['bloks'] = bloks
-            
-        return result
+            result['ball'] = None
+            result['bloks'] = None
+            if 'TEST SINOVLARIDA ISHTIROK ETMAGAN!' not in divCom.text:
+                collaps = divCom.find('div', attrs={'id': 'collaps'})
+                result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
+                table = collaps.find('table', attrs={'class': 'table table-bordered'})
+                tds = table.thead.tr.find_all('td')[:5]
+                bloks = []
+                for i, td in enumerate(tds):
+                    blokcha = {}
+                    txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
+                    # 1 - blok (1.1 ball)Ona tili10 ta savol
+                    match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
+                    blokcha['bali'] = float(match.groups()[0])
+                    blokcha['fan'] = match.groups()[1]
+                    blokcha['savollarSoni'] = int(match.groups()[2])
+                    bloks.append(blokcha)
+                
+                corrects = table.tbody.tr.find_all('td')[::2]
+                for i in range(5):
+                    bloks[i]['yechganlariSoni'] = int(corrects[i].text.strip())
+                result['bloks'] = bloks
+                
+            return result
+        except Exception as e:
+            print(e)
+            raise Exception(f"{abt_id} ni parsing qilishda xatolik")
         
         
     
