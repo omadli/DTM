@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS "scores"(
         sql = """
 CREATE TABLE IF NOT EXISTS "choices" (
     "id" SERIAL PRIMARY KEY,
-    "abtid" BIGINT NOT NULL UNIQUE REFERENCES "abiturients" ("abtid"),
+    "abtid" BIGINT NOT NULL REFERENCES "abiturients" ("abtid"),
     "selectionid" INT NOT NULL REFERENCES "selections" ("id"),
     "number" INT NOT NULL,
     CONSTRAINT "valid_number" 
