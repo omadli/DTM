@@ -1,11 +1,10 @@
 import re
 import sys
 import json
+import random
 import asyncio
 import aiohttp 
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
-from pprint import pprint
 
 
 class DTM:
@@ -13,7 +12,7 @@ class DTM:
         self.headers = {
             'Accept': '*/*',
             'Connection': 'keep-alive',
-            "User-Agent": UserAgent().random
+            "User-Agent": DTM.RandomUserAgent()
         }
         self.s = None
         self.url = 'https://mandat.dtm.uz/'
@@ -21,12 +20,18 @@ class DTM:
         self.languages = ["O'zbekcha", "Русский", "Qoraqalpoq", "Tadjik", "Qozoq", "Turkman"]
     
     
+    @staticmethod
+    def RandomUserAgent():
+        with open("./parser/user_agents.json", "r") as agents:
+            user_agents = json.load(agents)["agents"]
+        return random.choice(user_agents)
+    
     async def start(self):
         self.s = aiohttp.ClientSession()
     
     
     def change_user_agent(self):
-        self.headers['User-Agent'] = UserAgent().random
+        self.headers['User-Agent'] = DTM.RandomUserAgent()
     
     
     async def close(self):
