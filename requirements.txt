@@ -1,5 +1,6 @@
 pprint
 environs
+fake_useragent
 aiohttp==3.8.1
 asyncpg==0.25.0
 requests==2.27.1
