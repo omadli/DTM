@@ -95,8 +95,10 @@ class DTM:
                     blokcha = {}
                     txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
                     # 1 - blokOna tili10 ta savol
-                    match = re.search(str(i+1) + r" - blok([A-Za-z ]+)([13]0) ta savol", txt)
+                    match = re.search(str(i+1) + r" - blok(.+)([13]0) ta savol", txt)
                     blokcha['fan'] = match.groups()[0]
+                    if blokcha['fan'] == 'Биология':
+                        blokcha['fan'] = "Biologiya"
                     blokcha['savollarSoni'] = int(match.groups()[1])
                     bloks.append(blokcha)
                 
