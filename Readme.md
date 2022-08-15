@@ -8,6 +8,7 @@ Mundarija:
   - [Bazani clonlash](#bazani-clonlash)
   - [Structure](#structure)
   - [Bazada nimalar bor](#bazada-nimalar-bor)
+  - [Ubuntu uchun psql](#ubuntu-uchun-psql)
 - [Parser](#parser)
   - [Features](#features)
   - [Foydalanish](#foydalanish)
@@ -80,6 +81,21 @@ SELECT * FROM Abiturients;
 <img src="./screenshots/db_abiturients.png" alt="Bazadagi abituriyentlar">
 
 <br/><br/>
+
+## Ubuntu uchun psql
+Ubuntuda user authentication va termninalda ishlash boshqacha.
+Shuning uchun bazaga `postgres` bilan ulanish tavsiya e'tilmaydi.
+Foydalanib turgan useringiz masalan `ubuntu` nomiga postgresql dan foydalanish uchun user ochib oling.
+```bash
+sudo -u postgres psql
+postgres=# create database <DB_NAME>;
+postgres=# create user <DB_USER> with encrypted password '<DB_PASS>';
+postgres=# grant all privileges on database <DB_NAME> to <DB_USER>;
+exit;
+```
+DB_USER ga ubuntu profil userizni kiriting osonroq.
+Keyinchalik xatoliklarni oldini oladi.
+Keyin sudo siz ham ishlayverasiz.
 
 # Parser
 
