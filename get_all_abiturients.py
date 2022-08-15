@@ -46,7 +46,7 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
         p = 1
         n = 0
         res = await dtm.Users_list(p, regionID, unCode, shifr, 1, 1)
-        if res is not None and isinstance(res['jami'], int):
+        if res is not None and res and isinstance(res['jami'], int):
             
             sub = progressbar.ProgressBar(maxval=res['jami'], redirect_stdout=True)
             sub.start()
@@ -87,11 +87,12 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
             await db.execute('''INSERT INTO BoyevoySelections(selectionID, abts) VALUES ($1, $2);''', selectionID, n, execute=True)
             
             print(GREEN + f"\n\n\n{selectionID} {sel['uname']} {sel['fname']} bo'ldi\n\n\n" + RESET)
+            sub.finish()
         else:
             print(RED + f"\n\n\n{selectionID} {sel['uname']} {sel['fname']} o'xshamayapti.\nAbiturientlar ro'yxati bo'sh shekilli\n\n\n" + RESET)
         
         
-        sub.finish()
+        
         dtm.change_user_agent()
         total.update(ssID)
         print()
