@@ -21,7 +21,7 @@ async def __main():
         '''
         
 SELECT * FROM Abiturients a LEFT JOIN Scores s ON a.abtID=s.abtID 
-WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) LIMIT 10000;
+WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL);
 
         ''',
         fetch=True
