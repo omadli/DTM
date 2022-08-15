@@ -162,6 +162,8 @@ class DTM:
             ball = tds[4].text.strip()
             if ball == "Qiymatlanmagan!":
                 res1['ball'] = None
+            elif ball == "Test sinovlaridan chetlashtirilgan!":
+                res1['ball'] = -1
             else:
                 ball = ball.replace(',', '.')
                 res1['ball'] = float(ball)
