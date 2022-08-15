@@ -94,11 +94,10 @@ class DTM:
                 for i, td in enumerate(tds):
                     blokcha = {}
                     txt = td.text.strip().replace('\r', '').replace('\n', '').replace('\t', '')
-                    # 1 - blok (1.1 ball)Ona tili10 ta savol
-                    match = re.search(str(i+1) + r" - blok \(([123]\.1) ball\)([A-Za-z ]+)([13]0) ta savol", txt)
-                    blokcha['bali'] = float(match.groups()[0])
-                    blokcha['fan'] = match.groups()[1]
-                    blokcha['savollarSoni'] = int(match.groups()[2])
+                    # 1 - blokOna tili10 ta savol
+                    match = re.search(str(i+1) + r" - blok([A-Za-z ]+)([13]0) ta savol", txt)
+                    blokcha['fan'] = match.groups()[0]
+                    blokcha['savollarSoni'] = int(match.groups()[1])
                     bloks.append(blokcha)
                 
                 corrects = table.tbody.tr.find_all('td')[::2]
