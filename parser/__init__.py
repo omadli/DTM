@@ -1,1 +1,1 @@
-from . import parser
+from .parser import DTM
