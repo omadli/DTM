@@ -23,8 +23,16 @@ Mundarija:
 ### Python kutubxonalari
  Parser, ma'lumotlar bazasi uchun kerakli python kutubxonalarni o'rnatish:
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
+
+Aytgancha agar sizdagi tizim ubuntu bo'lsa beautifulsoup bilan ishlashda xatoliklar bo'lishi mumkin. Agar sizda `ImportError: No module named 'bs4'` degan xatolik chiqsa buni to'g'irlash uchun:
+```bash
+$ apt-cache search beautifulsoup
+$ sudo apt-get install python3-bs4
+```
+manashu ikkita kommandani ishlating. Agar yana biror xatolik bo'lsa Issuesga yozing.
+
 <hr>
 
 ### Konfiguratsiya uchun
@@ -44,7 +52,7 @@ qilib keyin ulaning. Aytgancha Baza PostgreSQL bo'lsin.
 ### Ma'lumotlar bazasini noldan qurish uchun
 Agar ma'lumotlar bazasini noldan qurmoqchi bo'lsangiz `first_time_runner.py` faylini ishga tushiring. 
 ```bash
-python first_time_runner.py
+$ python first_time_runner.py
 ```
 Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar bilan to'ldiradi.
 
@@ -56,7 +64,7 @@ Shunda malumotlar bazasiga kerakli Table larni yaratib, boshlang'ich ma'lumotlar
 `pg_dump` dan foydalanib chiqarilgan __backup__ fayl.
 O'zizga clonlab olish uchun terminalga
 ```bash
-psql -d <DB_NAME> -f dtm.sql -U <DB_USER>
+$ psql -d <DB_NAME> -f dtm.sql -U <DB_USER>
 ```
 deb yozing. `<DB_NAME>` o'rniga bazangiz uchun nom, masalan __DTM__ va `<DB_USER>` o'rniga o'zingizni psql foydalanuvchi username yingiz. Masalan `postgres` bo'lishi mumkin.
 
