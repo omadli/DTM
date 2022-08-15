@@ -2,7 +2,7 @@
 
 sql1 = ('''
         
-SELECT u.RegionID, s.Uncode, s.FacultyShifr, s.langID, s.mode  FROM Selections s 
+SELECT u.RegionID, s.Uncode, s.FacultyID, s.langID, s.mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code ORDER BY u.regionID;
 
     ''',
