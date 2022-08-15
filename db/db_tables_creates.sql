@@ -96,3 +96,9 @@ CREATE TABLE IF NOT EXISTS "fullchoices" (
     "f9" INT REFERENCES "selections" ("id"),
     "f10" INT REFERENCES "selections" ("id")
 );
+
+CREATE TABLE IF NOT EXISTS BoyevoySelections(
+	id SERIAL NOT NULL PRIMARY KEY,
+	selectionID INTEGER NOT NULL UNIQUE REFERENCES Selections(id),
+	abts BIGINT NOT NULL
+);

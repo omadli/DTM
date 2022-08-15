@@ -25,7 +25,7 @@ async def __main():
     # await db.create_table_scores()
     # await db.create_table_Choices()
     # await db.create_table_FullChoices()
-    
+    # await db.create_boyevoy_selections()
     
     # adding some datas
     await db.add_all_modes()

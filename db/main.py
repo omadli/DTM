@@ -198,6 +198,19 @@ CREATE TABLE IF NOT EXISTS "fullchoices" (
         await self.execute(sql, execute=True)
     
     
+    async def create_boyevoy_selections(self):
+        sql = '''
+
+CREATE TABLE IF NOT EXISTS BoyevoySelections(
+	id SERIAL NOT NULL PRIMARY KEY,
+	selectionID INTEGER NOT NULL UNIQUE REFERENCES Selections(id),
+	abts BIGINT NOT NULL
+);        
+        
+        '''
+        await self.execute(sql, execute=True)
+    
+    
     async def create_all_tables(self):
         dir_path = Path(__file__).resolve().parent
         with open(dir_path.joinpath('db_tables_creates.sql'), 'r', encoding='utf8') as f:
@@ -215,7 +228,7 @@ CREATE TABLE IF NOT EXISTS "fullchoices" (
         await self.insert_into('Languages', ['name'], ['Turkman'])
         await self.insert_into('Languages', ['name'], ['Qirgiz'])
     
-          
+    
     async def add_all_modes(self):
         await self.insert_into('Modes', ['name'], ['Kunduzgi'])
         await self.insert_into('Modes', ['name'], ['Sirtqi'])
