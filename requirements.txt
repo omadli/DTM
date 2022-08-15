@@ -1,5 +1,6 @@
 environs
 beautifulsoup4
+colorama
 progressbar2
 aiohttp==3.8.1
 asyncpg==0.25.0
