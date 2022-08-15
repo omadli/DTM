@@ -29,7 +29,7 @@ async def __main():
     
 SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr, s.langID, s.mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.facultyID=f.id 
-LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND f.blokID=1 AND s.langID=1 ORDER BY u.regionID;    
+LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL ORDER BY u.regionID;    
     
     '''
     selections_list = await db.execute(sql1, fetch=True)
