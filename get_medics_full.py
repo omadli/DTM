@@ -1,3 +1,4 @@
+import sys
 import asyncio
 from db.main import Database
 from parser import DTM
@@ -117,7 +118,8 @@ async def __main():
     
 if __name__ == '__main__':
     # try:
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(__main())
     # except Exception as e:
     #     print(e)

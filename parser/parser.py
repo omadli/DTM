@@ -1,4 +1,5 @@
 import re
+import sys
 import json
 import asyncio
 import aiohttp 
@@ -183,5 +184,6 @@ async def __main():
     
 
 if __name__ == '__main__':
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(__main())
