@@ -17,17 +17,15 @@ async def __main():
     await db.create()
     
     
-    abiturients = await db.execute(
-        '''
+    sql_1 = '''
         
 SELECT * FROM Abiturients a LEFT JOIN Scores s ON a.abtID=s.abtID 
-WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL);
+WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) LIMIT 1;
 
         ''',
-        fetch=True
-    )
-    num_i = 0
-    for abt in progressbar.progressbar(abiturients, redirect_stdout=True):
+
+    for num_i in progressbar.progressbar(range(10000), redirect_stdout=True):
+        abt = await db.execute(sql1, fetchrow=True)
         abtID = abt[1]
         abtDetail = await dtm.User_detail(abtID)
         if abtDetail is None:
@@ -119,7 +117,6 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL);
             ['abtID', 'ball', 'blok1', 'blok2', 'blok3', 'blok4', 'blok5', 'blokID'],
             [abtID, abtDetail['ball'], *yechganlariSoni, blokID]
         )
-        num_i += 1
         print(GREEN, f"{num_i})", abtID, abtDetail['fish'], "boyevoy bo'ldi", RESET)
     await dtm.close()
     print(RED, "Tugadi", RESET)
