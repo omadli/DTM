@@ -7,9 +7,16 @@ from asyncpg.exceptions import UniqueViolationError
 
 RED = '\033[31m'
 GREEN = '\033[32m'
+BLUE = '\033[36m'
 WHITE = '\033[37m'
 RESET = '\033[39m'
 
+try:
+    regionID = int(sys.argv[1])
+except Exception as e:
+    print("Regionni ID sini kiriting")
+    exit(2)
+    
 progressbar.streams.wrap_stderr()
 def up():
     sys.stdout.write('\x1b[1A')
@@ -29,10 +36,10 @@ async def __main():
     
 SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr, s.langID, s.mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.facultyID=f.id 
-LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL ORDER BY u.regionID;    
+LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=$1;    
     
     '''
-    selections_list = await db.execute(sql1, fetch=True)
+    selections_list = await db.execute(sql1, regionID, fetch=True)
     
     down()
     total = progressbar.ProgressBar(maxval=len(selections_list), redirect_stdout=True)
@@ -72,7 +79,16 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
                                 await db.insert_into('abiturients',columns, values)
                                 print(GREEN, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga qo'shildi", RESET)
                             except UniqueViolationError as e:
-                                print(RED, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazada mavjud ekan", RESET)
+                                abt_baza = await db.execute('''SELECT * FROM Abiturients WHERE abtID=$1;''', abt['abtID'], fetchrow=True)
+                                if abt_baza['ball'] != ball:
+                                    await db.execute(
+                                        '''UPDATE Abiturients SET ball=$1 WHERE abtID=$2;''',
+                                        ball, abt['abtID'], execute=True
+                                    )
+                                    
+                                    print(BLUE, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga bali kiritildi", RESET)
+                                else:
+                                    print(RED, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazada mavjud", RESET)
                             n += 1
                         p += 1
                     else:
