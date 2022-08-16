@@ -25,7 +25,7 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) LIMIT
         ''',
 
     for num_i in progressbar.progressbar(range(10000), redirect_stdout=True):
-        abt = await db.execute(sql1, fetchrow=True)
+        abt = await db.execute(sql_1, fetchrow=True)
         abtID = abt[1]
         abtDetail = await dtm.User_detail(abtID)
         if abtDetail is None:
