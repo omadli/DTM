@@ -69,6 +69,12 @@ $ psql -d <DB_NAME> -f dtm.sql -U <DB_USER>
 ```
 deb yozing. `<DB_NAME>` o'rniga bazangiz uchun nom, masalan __DTM__ va `<DB_USER>` o'rniga o'zingizni psql foydalanuvchi username yingiz. Masalan `postgres` bo'lishi mumkin.
 
+Ubuntu uchun `dtm.tar` faylida ham bor. Ayrim muammolar bo'lgani uchun. Clonlashga
+```bash
+pg_restore --verbose --clean --no-acl --no-owner --dbname=<DB_NAME>  -F tar -U <DB_USER> dtm.tar
+```
+`DB_NAME` bilan `DB_USER` nimaligini bilasiz.
+
 ## Structure
 SQL struktura 👉 [link](https://drawsql.app/teams/omadli/diagrams/dtm).
 <img src="./screenshots/db_structure.png" alt="Database structure">
