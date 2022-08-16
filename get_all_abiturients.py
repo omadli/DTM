@@ -11,11 +11,7 @@ BLUE = '\033[36m'
 WHITE = '\033[37m'
 RESET = '\033[39m'
 
-try:
-    regionID = int(sys.argv[1])
-except Exception as e:
-    print("Regionni ID sini kiriting")
-    exit(2)
+
     
 progressbar.streams.wrap_stderr()
 def up():
@@ -27,7 +23,7 @@ def down():
     sys.stdout.flush()
 
 
-async def __main():
+async def __main(regionID):
     db = Database()
     dtm = DTM()
     await dtm.start()
@@ -119,8 +115,14 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
     
 if __name__ == '__main__':
     # try:
+    region = 0
+    try:
+        region = int(sys.argv[1])
+    except Exception as e:
+        print("Regionni ID sini kiriting")
+        exit(2)
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(__main())
+    asyncio.run(__main(region))
     # except Exception as e:
     #     print(e)
