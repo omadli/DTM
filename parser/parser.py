@@ -17,7 +17,7 @@ class DTM:
         self.s = None
         self.url = 'https://mandat.dtm.uz/'
         self.modes = ['Kunduzgi', 'Sirtqi', 'Kechki', 'Masofaviy']
-        self.languages = ["O'zbekcha", "Русский", "Qoraqalpoq", "Tadjik", "Qozoq", "Turkman"]
+        self.languages = ["O'zbekcha", "Русский", "Qoraqalpoq", "Tadjik", "Qozoq", "Turkman", "Qirgiz"]
     
     
     @staticmethod
