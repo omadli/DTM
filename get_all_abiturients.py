@@ -23,7 +23,7 @@ def down():
     sys.stdout.flush()
 
 
-async def __main(p1, p2):
+async def __main(p):
     db = Database()
     dtm = DTM()
     await dtm.start()
@@ -32,10 +32,10 @@ async def __main(p1, p2):
     
 SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr AS shifr, s.langID AS langid, s.mode AS mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.facultyID=f.id 
-LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=14 AND s.id BETWEEN $1 AND $2 ORDER BY s.id;   
+LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=$1 ORDER BY s.id;   
    
     '''
-    selections_list = await db.execute(sql1, p1, p2, fetch=True)
+    selections_list = await db.execute(sql1, p, fetch=True)
     
     down()
     total = progressbar.ProgressBar(maxval=len(selections_list), redirect_stdout=True)
@@ -125,6 +125,6 @@ if __name__ == '__main__':
         exit(2)
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(__main(p*500+1, (p+1)*500))
+    asyncio.run(__main(p))
     # except Exception as e:
     #     print(e)
