@@ -47,10 +47,11 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
         selectionID = sel['id']
         langID = sel['langid']
         mode = sel['mode']
+        mode = [1, 3, 4, 6][mode - 1]
         ok = True
         p = 1
         n = 0
-        res = await dtm.Users_list(p, regionID, unCode, shifr, langID, mode)
+        res = await dtm.Users_list(p, regionID, unCode, int(shifr), langID, mode)
         if res is not None and res and isinstance(res['jami'], int):
             
             sub = progressbar.ProgressBar(maxval=res['jami'], redirect_stdout=True)
