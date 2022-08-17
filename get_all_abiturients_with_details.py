@@ -10,7 +10,7 @@ GREEN = '\033[32m'
 WHITE = '\033[37m'
 RESET = '\033[39m'
 
-async def __main():
+async def __main(p1, p2):
     db = Database()
     dtm = DTM()
     await dtm.start()
@@ -21,9 +21,10 @@ async def __main():
         '''
         
 SELECT * FROM Abiturients a LEFT JOIN Scores s ON a.abtID=s.abtID 
-WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) ORDER BY a.id;
+WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) AND a.id BETWEEN $1 AND $2 ORDER BY a.id;
 
         ''',
+        p1, p2,
         fetch=True
     )
     num_i = 0
@@ -126,8 +127,15 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) ORDER
     
 if __name__ == '__main__':
     # try:
+    p1, p2 = 0, 0
+    try:
+        p1 = int(sys.argv[1])
+        p2 = int(sys.argv[2])
+    except Exception as e:
+        print("Boshlanadiga ID va tugash ID sini kiriting")
+        exit(2)
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(__main())
+    asyncio.run(__main(p1, p2))
     # except Exception as e:
     #     print(e)
