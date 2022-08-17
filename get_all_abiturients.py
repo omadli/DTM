@@ -23,7 +23,7 @@ def down():
     sys.stdout.flush()
 
 
-async def __main(p):
+async def __main(_region):
     db = Database()
     dtm = DTM()
     await dtm.start()
@@ -35,7 +35,7 @@ INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.faculty
 LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=$1 ORDER BY s.id;   
    
     '''
-    selections_list = await db.execute(sql1, p, fetch=True)
+    selections_list = await db.execute(sql1, _region, fetch=True)
     
     down()
     total = progressbar.ProgressBar(maxval=len(selections_list), redirect_stdout=True)
