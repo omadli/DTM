@@ -30,7 +30,7 @@ async def __main(p1, p2):
     await db.create()
     sql1 = '''
     
-SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr, s.langID, s.mode  FROM Selections s 
+SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr AS shifr, s.langID AS langid, s.mode AS mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.facultyID=f.id 
 LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=14 AND s.id BETWEEN $1 AND $2 ORDER BY s.id;   
    
@@ -45,10 +45,12 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
         unCode = sel['uncode']
         shifr = sel['shifr']
         selectionID = sel['id']
+        langID = sel['langid']
+        mode = sel['mode']
         ok = True
         p = 1
         n = 0
-        res = await dtm.Users_list(p, regionID, unCode, shifr, 1, 1)
+        res = await dtm.Users_list(p, regionID, unCode, shifr, langID, mode)
         if res is not None and res and isinstance(res['jami'], int):
             
             sub = progressbar.ProgressBar(maxval=res['jami'], redirect_stdout=True)
