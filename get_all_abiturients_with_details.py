@@ -7,6 +7,7 @@ from parser import DTM
 
 RED = '\033[31m'
 GREEN = '\033[32m'
+YELLOW = '\033[33m'
 WHITE = '\033[37m'
 RESET = '\033[39m'
 
@@ -32,6 +33,7 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) AND a
         abtID = abt[1]
         abtDetail = await dtm.User_detail(abtID)
         if abtDetail is None:
+            print(YELLOW, abtID, "Ma'lumotlarini olib bo'lmadi", RESET)
             continue
         langID = abtDetail['til_id']
         fan1 = abtDetail['bloks'][4]['fan']
