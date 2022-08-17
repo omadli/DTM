@@ -60,7 +60,7 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
             
             while ok:
                 try:
-                    res = await dtm.Users_list(p, regionID, unCode, shifr, 1, 1)
+                    res = await dtm.Users_list(p, regionID, unCode, shifr, langID, mode)
                     if res is not None and res:
                         # res['jami'] // 10 + 1  # max_page
                         if n >= res['jami']:
