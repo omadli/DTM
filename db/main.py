@@ -16,7 +16,8 @@ class Database:
             user=config.DB_USER,
             password=config.DB_PASS,
             host=config.DB_HOST,
-            database=config.DB_NAME
+            database=config.DB_NAME,
+            max_inactive_connection_lifetime=3
         )
 
     async def execute(self, command, *args,

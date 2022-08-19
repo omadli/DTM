@@ -30,7 +30,7 @@ async def __main(_region):
     await db.create()
     sql1 = '''
     
-SELECT s.id, u.RegionID, s.Uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr AS shifr, s.langID AS langid, s.mode AS mode  FROM Selections s 
+SELECT s.id AS id, u.RegionID AS regionID, s.Uncode AS uncode, u.name AS uname, s.facultyID, f.name AS fname, f.shifr AS shifr, s.langID AS langid, s.mode AS mode  FROM Selections s 
 INNER JOIN Universities u ON s.Uncode=u.code INNER JOIN Faculties f ON s.facultyID=f.id 
 LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL AND u.regionID=$1 ORDER BY s.id;   
    
@@ -59,43 +59,39 @@ LEFT JOIN BoyevoySelections b ON b.selectionID=s.id WHERE b.selectionID IS NULL 
             up()
             
             while ok:
-                try:
-                    res = await dtm.Users_list(p, regionID, unCode, shifr, langID, mode)
-                    if res is not None and res:
-                        # res['jami'] // 10 + 1  # max_page
-                        if n >= res['jami']:
-                            ok = False
-                            break
-                        for abt in res['result']:
-                            ball = abt['ball']
-                            columns = ['abtID', 'name', 'langID']
-                            values = [int(abt['abtID']), abt['abtName'], 1]
-                            if ball is not None:
-                                columns.append('ball')
-                                values.append(ball)
-                            
-                            try:
-                                await db.insert_into('abiturients',columns, values)
-                                print(GREEN, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga qo'shildi", RESET)
-                            except UniqueViolationError as e:
-                                abt_baza = await db.execute('''SELECT * FROM Abiturients WHERE abtID=$1;''', abt['abtID'], fetchrow=True)
-                                if abt_baza['ball'] != ball:
-                                    await db.execute(
-                                        '''UPDATE Abiturients SET ball=$1 WHERE abtID=$2;''',
-                                        ball, abt['abtID'], execute=True
-                                    )
-                                    
-                                    print(BLUE, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga bali kiritildi", RESET)
-                                else:
-                                    print(RED, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazada mavjud", RESET)
-                            n += 1
-                        p += 1
-                    else:
+                res = await dtm.Users_list(p, regionID, unCode, shifr, langID, mode)
+                if res is not None and res:
+                    # res['jami'] // 10 + 1  # max_page
+                    if n >= res['jami']:
                         ok = False
                         break
-                except Exception as e:
-                    print(e)
+                    for abt in res['result']:
+                        ball = abt['ball']
+                        columns = ['abtID', 'name', 'langID']
+                        values = [int(abt['abtID']), abt['abtName'], langID]
+                        if ball is not None:
+                            columns.append('ball')
+                            values.append(ball)
+                        
+                        try:
+                            await db.insert_into('abiturients',columns, values)
+                            print(GREEN, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga qo'shildi", RESET)
+                        except UniqueViolationError as e:
+                            abt_baza = await db.execute('''SELECT * FROM Abiturients WHERE abtID=$1;''', abt['abtID'], fetchrow=True)
+                            if abt_baza['ball'] != ball:
+                                await db.execute(
+                                    '''UPDATE Abiturients SET ball=$1 WHERE abtID=$2;''',
+                                    ball, abt['abtID'], execute=True
+                                )
+                                
+                                print(BLUE, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazaga bali kiritildi", RESET)
+                            else:
+                                print(RED, f"{n+1})", abt['abtID'], abt['abtName'], ball, "bazada mavjud", RESET)
+                        n += 1
                     p += 1
+                else:
+                    ok = False
+                    break
                     
                 sub.update(n)
                 

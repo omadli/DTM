@@ -1,0 +1,87 @@
+{
+    "abt_id": 4467113,
+    "ball": 155.4,
+    "bloks": [
+        {
+            "fan": "Ona tili",
+            "savollarSoni": 10,
+            "yechganlariSoni": 9
+        },
+        {
+            "fan": "Matematika",
+            "savollarSoni": 10,
+            "yechganlariSoni": 9
+        },
+        {
+            "fan": "Tarix",
+            "savollarSoni": 10,
+            "yechganlariSoni": 8
+        },
+        {
+            "fan": "Matematika",
+            "savollarSoni": 30,
+            "yechganlariSoni": 26
+        },
+        {
+            "fan": "Fizika",
+            "savollarSoni": 30,
+            "yechganlariSoni": 22
+        }
+    ],
+    "fish": "MAMADIYOROVA S. O.",
+    "grant_ustuvor": false,
+    "til": "O'zbekcha",
+    "til_id": 1,
+    "yonalishlar": [
+        {
+            "faculty": "Matematika va informatika",
+            "grant": 30,
+            "kantrak": 148,
+            "maqsadli": false,
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "otm": "Navoiy davlat pedagogika instituti",
+            "shifr": "60110600"
+        },
+        {
+            "faculty": "Matematika va informatika",
+            "grant": 33,
+            "kantrak": 84,
+            "maqsadli": false,
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "otm": "Buxoro davlat universitetining Pedagogika instituti",
+            "shifr": "60110600"
+        },
+        {
+            "faculty": "Matematika va informatika",
+            "grant": 48,
+            "kantrak": 140,
+            "maqsadli": false,
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "otm": "Jizzax davlat pedagogika instituti",
+            "shifr": "60110600"
+        },
+        {
+            "faculty": "Amaliy matematika",
+            "grant": 20,
+            "kantrak": 55,
+            "maqsadli": false,
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "otm": "O\u2018zbekiston Milliy universiteti Jizzax filiali",
+            "shifr": "60540200"
+        },
+        {
+            "faculty": "Matematika",
+            "grant": 5,
+            "kantrak": 20,
+            "maqsadli": false,
+            "mode": "Kunduzgi",
+            "mode_id": 1,
+            "otm": "Samarqand davlat universiteti Kattaqo\u2018rg\u2018on filiali",
+            "shifr": "60540100"
+        }
+    ]
+}

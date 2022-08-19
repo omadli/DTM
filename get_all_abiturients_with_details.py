@@ -44,6 +44,12 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) AND a
                 abtDetail['grant_ustuvor'], abtID,
                 execute=True
             )
+        if abt['langid'] != abtDetail['til_id']:
+            await db.execute(
+                '''UPDATE Abiturients SET langID=$1 WHERE abtID=$2;''',
+                abtDetail['til_id'], abtID,
+                execute=True
+            )
         blokID = await db.execute(
             '''SELECT id FROM Bloks 
             WHERE main=$1 AND second=$2 AND langID=$3;''',
@@ -70,7 +76,7 @@ WHERE s.abtID IS NULL AND a.ball IS NOT NULL AND a.ball !=CAST(-1 AS REAL) AND a
                 fetchrow=True
             )
             facID = faculty[0]
-            if faculty[4] is None:
+            if faculty[4] is None and (fan1 == '-' or fan2 == '-'):
                 await db.execute(
                     '''UPDATE Faculties SET blokID=$1 WHERE shifr=$2;''',
                     blokID, faculty[2],

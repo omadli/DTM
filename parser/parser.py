@@ -51,7 +51,49 @@ class DTM:
             return print(e)
         
 
+    async def Grant_ustuvor(self, abt_id: int = None, bs_elem:BeautifulSoup = None) -> bool|None:
+        elem = 0
+        if abt_id is None and bs_elem is None:
+            raise Exception("yo abt_id yo bs_elem kiritilishi kerak")
+        elif abt_id is not None:
+            bs = await self.__getPage('Home2022/Details/' + str(abt_id))
+            if bs is None:
+                raise Exception("Olib bo'lmadi")
+                return None
+            main_element = bs.find('main')
+            elem = main_element.find('div', attrs={'id': 'divCom'}).div
+        else:
+            elem = bs_elem
+        if "Tanlangan har bir yo‘nalishda → avval davlat granti, so'ngra to'lov-kontrakt asosida ko'rib chiqiladi!" in elem.text:
+            return False
+        elif "Tanlangan barcha yo‘nalishda → avval davlat granti, so'ngra to'lov-kontrakt asosida ko'rib chiqiladi!" in elem.text:
+            return True
+        else:
+            raise Exception("bu bs_elem ni ichida grant ustuvorligi topilmadi")
+    
+    
+    async def Abt_ball(self, abt_id: int=None, bs_elem: BeautifulSoup=None):
+        elem = 0
+        if abt_id is None and bs_elem is None:
+            raise Exception("yo abt_id yo bs_elem kiritilishi kerak")
+        elif abt_id is not None:
+            bs = await self.__getPage('Home2022/Details/' + str(abt_id))
+            if bs is None:
+                return None
+            divCom = bs_elem.find('div', attrs={'id': 'divCom'}).div
+            if 'TEST SINOVLARIDA ISHTIROK ETMAGAN!' in divCom.text:
+                return None
+            elem = divCom.find('div', attrs={'id': 'collaps'})
+        else:
+            elem = bs_elem
+        try:
+            return float(elem.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
+        except Exception as e:
+            print(e)
+            raise Exception("balini olib bo'lmadi")
 
+
+    
     async def User_detail(self, abt_id: int):
         bs = await self.__getPage('Home2022/Details/' + str(abt_id))
         if bs is None:
@@ -64,7 +106,7 @@ class DTM:
             divCom = main_element.find('div', attrs={'id': 'divCom'}).div
             result['til'] = divCom.find_all('div', attrs={'class': 'col-md-4'})[1].u.text.strip()
             result['til_id'] = self.languages.index(result['til']) + 1
-            result['grant_ustuvor'] = "avval davlat granti, so'ngra to'lov-kontrakt asosida ko'rib chiqiladi!" in divCom.text
+            result['grant_ustuvor'] = await self.Grant_ustuvor(bs_elem=divCom)
             tbody = divCom.find('tbody')
             tr_list = tbody.find_all('tr')
             result['yonalishlar'] = []
@@ -87,7 +129,7 @@ class DTM:
             result['bloks'] = None
             if 'TEST SINOVLARIDA ISHTIROK ETMAGAN!' not in divCom.text:
                 collaps = divCom.find('div', attrs={'id': 'collaps'})
-                result['ball'] = float(collaps.div.h5.b.text.strip().replace('Umumiy ball: ', '').replace(',', '.'))
+                result['ball'] = await self.Abt_ball(bs_elem=collaps)
                 table = collaps.find('table', attrs={'class': 'table table-bordered'})
                 tds = table.thead.tr.find_all('td')[:5]
                 bloks = []
@@ -183,10 +225,10 @@ async def __main():
     # test
     p = DTM()
     await p.start()
-    datas = dict(await p.User_detail(4000733))
+    datas = dict(await p.User_detail(4467113))
     # pprint(datas)
     # print(str(datas))
-    with open('./parser/test/result_example.json', 'w', encoding='utf8') as f:
+    with open('./parser/test/result_example2.json', 'w', encoding='utf8') as f:
         f.write(json.dumps(datas, indent=4, sort_keys=True))
     await p.close()
     
